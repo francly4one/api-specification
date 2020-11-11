@@ -332,11 +332,49 @@ paths:
           $ref: "#/components/responses/NotFoundError"
         "422":
           $ref: "#/components/responses/UnprocessableEntityError"
+  /{api_key}/transfer-number:
+    post:
+      summary: Transfer number
+      operationId: transferNumber
+      description: >
+        Transfer number from one account to another.
+      tags:
+        - Transfers
+      security:
+        - basicAuth: []
+      parameters:
+        - name: api_key
+          in: path
+          description: ID of the primary account.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TransferNumberRequest"
+      responses:
+        "200":
+          description: Number transfer response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TransferNumberResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "403":
+          $ref: "#/components/responses/ForbiddenError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "422":
+          $ref: "#/components/responses/UnprocessableEntityError"
 tags:
   - name: Subaccount Management
     description: This section shows how you can create, retrieve and modify subaccounts of a primary account.
   - name: Transfers
-    description: This section shows how you execute credit and balance transfers, as well as viewing past transactions.
+    description: This section shows how you execute credit, balance and number transfers, as well as viewing past transactions.
 components:
   securitySchemes:
     basicAuth:
@@ -620,6 +658,33 @@ components:
               type: array
               items:
                 $ref: "#/components/schemas/TransferBalanceResponse"
+    TransferNumberResponse:
+      properties:
+        number_transfer_id:
+          example: "07b5-46e1-a527-85530e625800"
+          type: string
+          description: >-
+            Unique number transfer ID
+        number:
+          example: 235077036
+          type: number
+          description: >-
+            Number transfered
+        from:
+          example: "7c9738e6"
+          type: string
+          description: >-
+            Account the number is transferred from
+        to:
+          example: "ad6dc56f"
+          type: string
+          description: >-
+            Account the number is transferred to
+        created_at:
+          example: "2019-03-02T16:34:49Z"
+          type: string
+          description: >-
+            The date and time when the number transfer was executed
     NewSubaccountRequest:
       type: object
       required:
@@ -663,6 +728,21 @@ components:
         - from
         - to
         - amount
+    TransferNumberRequest:
+      type: object
+      properties: 
+        from:
+          type: string
+          example: "7c9738e6"
+        to:
+          type: string
+          example: "ad6dc56f"
+        number:
+          type: number
+          example: "23507703696"
+        country:
+          type: string
+          example: "GB"
 
 x-errors:
   validation:
