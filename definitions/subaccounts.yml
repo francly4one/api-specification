@@ -670,6 +670,11 @@ components:
           type: number
           description: >-
             Number transfered
+        country:
+          example: "GB"
+          type: string
+          description: >-
+            The two character country code in ISO 3166-1 alpha-2 format
         from:
           example: "7c9738e6"
           type: string
