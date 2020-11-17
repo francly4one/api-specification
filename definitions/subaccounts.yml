@@ -642,11 +642,6 @@ components:
             The date and time when the balance transfer was executed
     TransferNumberResponse:
       properties:
-        number_transfer_id:
-          example: "07b5-46e1-a527-85530e625800"
-          type: string
-          description: >-
-            Unique number transfer ID
         number:
           example: 235077036
           type: number
@@ -667,11 +662,6 @@ components:
           type: string
           description: >-
             Account the number is transferred to
-        created_at:
-          example: "2019-03-02T16:34:49Z"
-          type: string
-          description: >-
-            The date and time when the number transfer was executed
     ListCreditTransfersResponse:
       properties:
         _embedded:
