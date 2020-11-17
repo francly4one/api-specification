@@ -640,24 +640,6 @@ components:
           type: string
           description: >-
             The date and time when the balance transfer was executed
-    ListCreditTransfersResponse:
-      properties:
-        _embedded:
-          type: object
-          properties:
-            credit-transfers:
-              type: array
-              items:
-                $ref: "#/components/schemas/TransferCreditResponse"
-    ListBalanceTransfersResponse:
-      properties:
-        _embedded:
-          type: object
-          properties:
-            balance_transfers:
-              type: array
-              items:
-                $ref: "#/components/schemas/TransferBalanceResponse"
     TransferNumberResponse:
       properties:
         number_transfer_id:
@@ -690,6 +672,24 @@ components:
           type: string
           description: >-
             The date and time when the number transfer was executed
+    ListCreditTransfersResponse:
+      properties:
+        _embedded:
+          type: object
+          properties:
+            credit-transfers:
+              type: array
+              items:
+                $ref: "#/components/schemas/TransferCreditResponse"
+    ListBalanceTransfersResponse:
+      properties:
+        _embedded:
+          type: object
+          properties:
+            balance_transfers:
+              type: array
+              items:
+                $ref: "#/components/schemas/TransferBalanceResponse"
     NewSubaccountRequest:
       type: object
       required:
