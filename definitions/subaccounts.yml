@@ -365,7 +365,13 @@ paths:
         "401":
           $ref: "#/components/responses/UnauthorizedError"
         "403":
-          $ref: "#/components/responses/ForbiddenError"
+          description: Action is forbidden
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/UnprovisionedErrorResponse"
+                  - $ref: "#/components/schemas/InvalidNumberTransferErrorResponse"
         "404":
           $ref: "#/components/responses/NotFoundError"
         "422":
@@ -410,25 +416,7 @@ components:
       content:
         application/json:
           schema:
-            type: object
-            required:
-              - type
-              - title
-              - detail
-              - instance
-            properties:
-              type:
-                type: string
-                example: "https://developer.nexmo.com/api-errors#unprovisioned"
-              title:
-                type: string
-                example: "Authorisation error"
-              detail:
-                type: string
-                example: "Account acc6111f is not provisioned to access Subaccount Provisioning API"
-              instance:
-                type: string
-                example: "158b8f199c45014ab7b08bfe9cc1c12c"
+            $ref: "#/components/schemas/UnprovisionedErrorResponse"
     NotFoundError:
       description: The account ID provided does not exist in our system or you do not have access
       content:
@@ -514,6 +502,48 @@ components:
                 type: string
                 example: "158b8f199c45014ab7b08bfe9cc1c12c"
   schemas:
+    UnprovisionedErrorResponse:
+      description: Unprovisioned
+      type: object
+      required:
+        - type
+        - title
+        - detail
+        - instance
+      properties:
+        type:
+          type: string
+          example: "https://developer.nexmo.com/api-errors#unprovisioned"
+        title:
+          type: string
+          example: "Authorisation error"
+        detail:
+          type: string
+          example: "Account acc6111f is not provisioned to access Subaccount Provisioning API"
+        instance:
+          type: string
+          example: "158b8f199c45014ab7b08bfe9cc1c12c"
+    InvalidNumberTransferErrorResponse:
+      description: Invalid Transfer
+      type: object
+      required:
+        - type
+        - title
+        - detail
+        - instance
+      properties:
+        type:
+          type: string
+          example: "https://developer.nexmo.com/api-errors#invalid-number-transfer"
+        title:
+          type: string
+          example: "Invalid Number Transfer"
+        detail:
+          type: string
+          example: "Failed to perform transfer number {number} from account {from} to {to} - Shortcode not found"
+        instance:
+          type: string
+          example: "158b8f199c45014ab7b08bfe9cc1c12c"
     SubaccountsAllResponse:
       properties:
         _embedded:
@@ -643,8 +673,8 @@ components:
     TransferNumberResponse:
       properties:
         number:
-          example: 235077036
-          type: number
+          example: "235077036"
+          type: string
           description: >-
             Number transfered
         country:
@@ -725,7 +755,7 @@ components:
         - amount
     TransferNumberRequest:
       type: object
-      properties: 
+      properties:
         from:
           type: string
           example: "7c9738e6"
